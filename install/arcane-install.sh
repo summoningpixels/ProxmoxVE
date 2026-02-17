@@ -2,7 +2,7 @@
 
 # Copyright (c) 2021-2026 community-scripts ORG
 # Author: summoningpixels derp
-# License: MIT | https://github.com/community-scripts/ProxmoxVE/raw/main/LICENSE
+# License: MIT | https://github.com/summoningpixels/ProxmoxVE/raw/main/LICENSE
 # Source: https://getarcane.app/
 
 source /dev/stdin <<<"$FUNCTIONS_FILE_PATH"
