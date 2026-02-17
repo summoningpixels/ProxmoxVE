@@ -44,7 +44,7 @@ JWT_SECRET=$(openssl rand -base64 24 | tr -d '/+=')
 
 sed -i "s/^ENCRYPTION_KEY=.*/ENCRYPTION_KEY=${ENCRYPTION_KEY}/" /opt/arcane/compose.yaml
 sed -i "s/^JWT_SECRET=.*/JWT_SECRET=${JWT_SECRET}/" /opt/arcane/compose.yaml
-sed -i "s/^APP_URL=.*/APP_URL=${APP_URL}/" /opt/arcane/.env
+# sed -i "s/^APP_URL=.*/APP_URL=${APP_URL}/" /opt/arcane/.env
 sed -i "/^ENCRYPTION_KEY/ { /^[^#]/ s/^/#/ }" /opt/arcane/.env
 sed -i "/^JWT_SECRET/ { /^[^#]/ s/^/#/ }" /opt/arcane/.env
 
