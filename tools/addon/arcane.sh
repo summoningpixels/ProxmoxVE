@@ -105,8 +105,7 @@ function install() {
   local ENCRYPTION_KEY JWT_SECRET APP_URL STACK_DIR
   ENCRYPTION_KEY=$(openssl rand -base64 32 | tr -dc 'a-zA-Z0-9' | head -c32)
   JWT_SECRET=$(openssl rand -base64 32 | tr -dc 'a-zA-Z0-9' | head -c32)
-  APP_URL="http://localhost:${DEFAULT_PORT}"
-  STACK_DIR="/etc/arcane/stacks"
+  STACK_DIR="/etc/arcane/projects"
 
   msg_info "Creating stacks directory"
   mkdir -p "$STACK_DIR"
@@ -125,7 +124,7 @@ function install() {
   sed -i '/^[[:space:]]*#/!s|/host/path/to/projects|'"$STACK_DIR"'|g' "$COMPOSE_FILE"
   sed -i '/^[[:space:]]*#/!s|ENCRYPTION_KEY=.*|ENCRYPTION_KEY='"$ENCRYPTION_KEY"'|g' "$COMPOSE_FILE"
   sed -i '/^[[:space:]]*#/!s|JWT_SECRET=.*|JWT_SECRET='"$JWT_SECRET"'|g' "$COMPOSE_FILE"
-  sed -i '/^[[:space:]]*#/!s|APP_URL=.*|APP_URL='"$APP_URL"'|g' "$ENV_FILE"
+  sed -i '/^[[:space:]]*#/!s|APP_URL=.*|APP_URL=http://localhost:3552|g' "$ENV_FILE"
   sed -i '/^[[:space:]]*#/!s|ENCRYPTION_KEY=.*|#&|g' "$ENV_FILE"
   sed -i '/^[[:space:]]*#/!s|JWT_SECRET=.*|#&|g' "$ENV_FILE"
   msg_ok "Configured compose and env files"
