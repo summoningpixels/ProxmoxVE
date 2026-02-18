@@ -43,12 +43,19 @@ ENCRYPTION_KEY=$(openssl rand -base64 32 | tr -d '/+=')
 JWT_SECRET=$(openssl rand -base64 24 | tr -d '/+=')
 STACK_DIR="/etc/arcane/stacks"
 
-sed -i '/ENCRYPTION_KEY=/ s|\(ENCRYPTION_KEY=\).*|\1'"$ENCRYPTION_KEY"'|' /opt/arcane/compose.yaml
-sed -i '/JWT_SECRET=/ s|\(JWT_SECRET=\).*|\1'"$JWT_SECRET"'|' /opt/arcane/compose.yaml
+# sed -i '/ENCRYPTION_KEY=/ s|\(ENCRYPTION_KEY=\).*|\1'"$ENCRYPTION_KEY"'|' /opt/arcane/compose.yaml
+# sed -i '/JWT_SECRET=/ s|\(JWT_SECRET=\).*|\1'"$JWT_SECRET"'|' /opt/arcane/compose.yaml
 # sed -i "s/^APP_URL=.*/APP_URL=${APP_URL}/" /opt/arcane/.env
-sed -i "/^ENCRYPTION_KEY/ { /^[^#]/ s/^/#/ }" /opt/arcane/.env
-sed -i "/^JWT_SECRET/ { /^[^#]/ s/^/#/ }" /opt/arcane/.env
-sed -i "\|/host/path/to/projects:/app/data/projects| s|^\([[:space:]]*\).*|\1$STACK_DIR|" /opt/arcane/compose.yaml
+# sed -i "/^ENCRYPTION_KEY/ { /^[^#]/ s/^/#/ }" /opt/arcane/.env
+# sed -i "/^JWT_SECRET/ { /^[^#]/ s/^/#/ }" /opt/arcane/.env
+# sed -i "\|/host/path/to/projects:/app/data/projects| s|^\([[:space:]]*\).*|\1$STACK_DIR|" /opt/arcane/compose.yaml
+
+sed -i '/^[[:space:]]*#/!s|/host/path/to/projects|'"$STACK_DIR"'|g' /opt/arcane/compose.yaml
+sed -i '/^[[:space:]]*#/!s|ENCRYPTION_KEY=.*|ENCRYPTION_KEY='"$ENCRYPTION_KEY"'|g' /opt/arcane/compose.yaml
+sed -i '/^[[:space:]]*#/!s|JWT_SECRET=.*|JWT_SECRET='"$JWT_SECRET"'|g' /opt/arcane/compose.yaml
+sed -i '/^[[:space:]]*#/!s|APP_URL=.*|APP_URL='"$APP_URL"'|g' /opt/arcane/.env
+sed -i '/^[[:space:]]*#/!s|ENCRYPTION_KEY=.*|#&|g' /opt/arcane/.env
+sed -i '/^[[:space:]]*#/!s|JWT_SECRET=.*|#&|g' /opt/arcane/.env
 
 msg_ok "Setup Arcane Environment"
 
