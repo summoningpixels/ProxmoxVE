@@ -102,7 +102,7 @@ function install() {
   msg_ok "Created ${INSTALL_PATH}"
 
   # Generate secrets and config values
-  local ENCRYPTION_KEY JWT_SECRET APP_URL PROJ_DIR
+  local ENCRYPTION_KEY JWT_SECRET PROJ_DIR
   ENCRYPTION_KEY=$(openssl rand -base64 32 | tr -dc 'a-zA-Z0-9' | head -c32)
   JWT_SECRET=$(openssl rand -base64 32 | tr -dc 'a-zA-Z0-9' | head -c32)
   PROJ_DIR="/etc/arcane/projects"
@@ -124,7 +124,7 @@ function install() {
   sed -i '/^[[:space:]]*#/!s|/host/path/to/projects|'"$PROJ_DIR"'|g' "$COMPOSE_FILE"
   sed -i '/^[[:space:]]*#/!s|ENCRYPTION_KEY=.*|ENCRYPTION_KEY='"$ENCRYPTION_KEY"'|g' "$COMPOSE_FILE"
   sed -i '/^[[:space:]]*#/!s|JWT_SECRET=.*|JWT_SECRET='"$JWT_SECRET"'|g' "$COMPOSE_FILE"
-  sed -i '/^[[:space:]]*#/!s|APP_URL=.*|APP_URL=http://localhost:3552|g' "$ENV_FILE"
+  sed -i '/^[[:space:]]*#/!s|APP_URL=.*|APP_URL=http://localhost:'"$DEFAULT_PORT"'|g' "$ENV_FILE"
   sed -i '/^[[:space:]]*#/!s|ENCRYPTION_KEY=.*|#&|g' "$ENV_FILE"
   sed -i '/^[[:space:]]*#/!s|JWT_SECRET=.*|#&|g' "$ENV_FILE"
   msg_ok "Configured compose and env files"
