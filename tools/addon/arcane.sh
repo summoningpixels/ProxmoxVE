@@ -102,14 +102,14 @@ function install() {
   msg_ok "Created ${INSTALL_PATH}"
 
   # Generate secrets and config values
-  local ENCRYPTION_KEY JWT_SECRET APP_URL STACK_DIR
+  local ENCRYPTION_KEY JWT_SECRET APP_URL PROJ_DIR
   ENCRYPTION_KEY=$(openssl rand -base64 32 | tr -dc 'a-zA-Z0-9' | head -c32)
   JWT_SECRET=$(openssl rand -base64 32 | tr -dc 'a-zA-Z0-9' | head -c32)
-  STACK_DIR="/etc/arcane/projects"
+  PROJ_DIR="/etc/arcane/projects"
 
   msg_info "Creating stacks directory"
-  mkdir -p "$STACK_DIR"
-  msg_ok "Created ${STACK_DIR}"
+  mkdir -p "$PROJ_DIR"
+  msg_ok "Created ${PROJ_DIR}"
 
   msg_info "Downloading Docker Compose file"
   curl -fsSL "https://raw.githubusercontent.com/getarcaneapp/arcane/refs/heads/main/docker/examples/compose.basic.yaml" -o "$COMPOSE_FILE"
@@ -121,7 +121,7 @@ function install() {
   msg_ok "Downloaded .env file"
 
   msg_info "Configuring compose and env files"
-  sed -i '/^[[:space:]]*#/!s|/host/path/to/projects|'"$STACK_DIR"'|g' "$COMPOSE_FILE"
+  sed -i '/^[[:space:]]*#/!s|/host/path/to/projects|'"$PROJ_DIR"'|g' "$COMPOSE_FILE"
   sed -i '/^[[:space:]]*#/!s|ENCRYPTION_KEY=.*|ENCRYPTION_KEY='"$ENCRYPTION_KEY"'|g' "$COMPOSE_FILE"
   sed -i '/^[[:space:]]*#/!s|JWT_SECRET=.*|JWT_SECRET='"$JWT_SECRET"'|g' "$COMPOSE_FILE"
   sed -i '/^[[:space:]]*#/!s|APP_URL=.*|APP_URL=http://localhost:3552|g' "$ENV_FILE"
