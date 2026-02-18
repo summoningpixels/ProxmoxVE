@@ -5,8 +5,9 @@
 # Source: https://github.com/getarcaneapp/arcane
 
 source <(curl -fsSL https://raw.githubusercontent.com/summoningpixels/ProxmoxVE/feature/arcane/misc/core.func)
-source <(curl -fsSL https://raw.githubusercontent.com/summoningpixels/ProxmoxVE/feature/arcane/tools.func)
-source <(curl -fsSL https://raw.githubusercontent.com/summoningpixels/ProxmoxVE/feature/arcane/error_handler.func)
+source <(curl -fsSL https://raw.githubusercontent.com/summoningpixels/ProxmoxVE/feature/arcane/misc/tools.func)
+source <(curl -fsSL https://raw.githubusercontent.com/summoningpixels/ProxmoxVE/feature/arcane/misc/error_handler.func)
+source <(curl -fsSL https://raw.githubusercontent.com/summoningpixels/ProxmoxVE/feature/arcane/misc/api.func) 2>/dev/null || true
 
 # Enable error handling
 set -Eeuo pipefail
